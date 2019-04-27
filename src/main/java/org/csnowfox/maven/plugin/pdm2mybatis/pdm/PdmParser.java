@@ -11,20 +11,22 @@ import org.apache.log4j.Logger;
 import org.csnowfox.maven.plugin.pdm2mybatis.entity.Column;
 import org.csnowfox.maven.plugin.pdm2mybatis.entity.Key;
 import org.csnowfox.maven.plugin.pdm2mybatis.entity.Table;
+import org.csnowfox.maven.plugin.pdm2mybatis.utils.MavenLogger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import org.csnowfox.maven.plugin.pdm2mybatis.LogUtils;
 import org.csnowfox.maven.plugin.pdm2mybatis.entity.User;
+import org.slf4j.LoggerFactory;
 
 /**
- * pdm文件解析器
- */
+ * @ClassName: PdmParser
+ * @Description pdm文件解析器
+ * @Author Csnowfox
+ * @Date 2019/4/27 16:45
+ **/
 public class PdmParser {
-	
-	Logger log = Logger.getLogger(getClass());
 
 	public Table[] parsePDM_VO(String tableName, String filePath) {
 		Table[] tabs = new Table[0];
@@ -38,7 +40,7 @@ public class PdmParser {
 		try {
 			doc = sr.read(f);
 		} catch (DocumentException e) {
-			LogUtils.logger.info("=====read error[file:" + filePath + "]======");
+			MavenLogger.info("=====read error[file:" + filePath + "]======");
 			e.printStackTrace();
 		}
 		HashMap mpUser = readUsers(doc);
@@ -74,9 +76,9 @@ public class PdmParser {
 					vo.setUser((User) mpUser.get(userid));
 				} catch (Exception e) {
 					e.printStackTrace();
-					this.log.error("[" + new Date() + "]+++++++++有错误[" + vo.getComment() + ", " + vo.getTableCode() + "] 具体如下：++++");
-					this.log.error(e);
-					this.log.error("[" + new Date() + "]+++++++++有错误[" + vo.getComment() + ", " + vo.getTableCode() + "] 结束++++");
+					MavenLogger.error("[" + new Date() + "]+++++++++有错误[" + vo.getComment() + ", " + vo.getTableCode() + "] 具体如下：++++");
+					MavenLogger.error("Error", e);
+					MavenLogger.error("[" + new Date() + "]+++++++++有错误[" + vo.getComment() + ", " + vo.getTableCode() + "] 结束++++");
 				}
 				voS.add(vo);
 			}

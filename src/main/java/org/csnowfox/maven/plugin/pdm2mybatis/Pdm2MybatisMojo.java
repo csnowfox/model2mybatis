@@ -3,6 +3,9 @@ package org.csnowfox.maven.plugin.pdm2mybatis;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.csnowfox.maven.plugin.pdm2mybatis.utils.MavenLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.HashMap;
@@ -15,7 +18,7 @@ import java.util.StringTokenizer;
  * @goal echo
  * 
  */
-public class EchoMojo extends AbstractMojo {
+public class Pdm2MybatisMojo extends AbstractMojo {
 
 	/**
 	 * 指定生成的dao文件所在的路径
@@ -23,13 +26,6 @@ public class EchoMojo extends AbstractMojo {
      * @required
      */
 	private String pathdao;
-	
-	/**
-	 * 指定生成mapper的xml文件所在的路径
-     * @parameter expression="${pathsvn}"
-     * @required
-     */
-	private String pathsvn;
 	
 	/**
 	 * 生成java类的包基础路径
@@ -90,6 +86,9 @@ public class EchoMojo extends AbstractMojo {
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		getLog().info("根据pdm生成dao代码");
 
+		// 初始化日志系统
+		MavenLogger.init(getLog());
+
 		String baseDirStr = "";
 		try {
 			baseDirStr = basedir.getCanonicalPath();
@@ -97,23 +96,20 @@ public class EchoMojo extends AbstractMojo {
 			e.printStackTrace();
 		}
 
-		LogUtils.logger = getLog();
 		pathdao = baseDirStr + File.separator + pathdao;
-		pathsvn = baseDirStr + File.separator + pathsvn;
 		pathpdm = baseDirStr + File.separator + pathpdm;
 		pathsql = baseDirStr + File.separator + pathsql;
 
 		getLog().info("pathdao = " + pathdao);
-		getLog().info("pathsvn = " + pathsvn);
 		getLog().info("pathpdm = " + pathpdm);
 		getLog().info("pathsql = " + pathsql);
 		
 		/**
-		 * 由张美宏提交修改,支持多文件
+		 * 支持多文件
 		 * */
 		File pathFile = new File(pathpdm);
 		if(pathFile.isFile()){
-			Create.main(pathdao, pathsvn, pathsql, namesql,
+			Pdm2MybatisJavaCode.createFiles(pathdao, pathsql, namesql,
 					projectname, pathpack, pathpdm, tables, interfaceName);
 		}else{
 			try{
@@ -133,7 +129,7 @@ public class EchoMojo extends AbstractMojo {
 					tmpFileName = tmpFileName.substring(0, dotIndex);
 					if(userMap.containsKey(tmpFileName)){
 						String newTables = userMap.get(tmpFileName);
-						Create.main(pathdao, pathsvn, pathsql, tmpFileName + "_" + namesql,
+						Pdm2MybatisJavaCode.createFiles(pathdao, pathsql, tmpFileName + "_" + namesql,
 								projectname, pathpack.toLowerCase(), 
 								tmpFile.getAbsolutePath(), newTables, interfaceName);
 					}

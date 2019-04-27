@@ -17,7 +17,7 @@ public class GenMain {
     public static void main(String[] args) {
         List<String> warnings = new ArrayList<String>();
         boolean overwrite = true;//如果已经生成过了是否进行覆盖
-        String genCfg = "E:\\workspaces\\branch\\plugin.daocre\\src\\test\\java\\generatorConfig.xml";//配置文件的路径:默认放到src下面
+        String genCfg = "D:\\workspace\\pdm2mybatis\\src\\test\\java\\generatorConfig.xml";//配置文件的路径:默认放到src下面
         File configFile = new File(genCfg);
         ConfigurationParser cfgParser = new ConfigurationParser(warnings);//配置文件解析器
         Configuration config = null;

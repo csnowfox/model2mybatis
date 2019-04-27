@@ -3,7 +3,14 @@ package org.csnowfox.maven.plugin.pdm2mybatis.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @ClassName: Key
+ * @Description pdm解析结果主键
+ * @Author Csnowfox
+ * @Date 2019/4/27 16:45
+ **/
 public class Key {
+
 	String id;
 	String name;
 	String code;

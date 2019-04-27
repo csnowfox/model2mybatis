@@ -22,10 +22,10 @@
         </commentGenerator>
         <!-- 数据库连接 -->
         <jdbcConnection
-                driverClass="oracle.jdbc.driver.OracleDriver"
-                connectionURL="jdbc:oracle:thin:@88.0.3.6:1552:devkd"
-                userId="kfat"
-                password="kfat">
+                driverClass="com.mysql.jdbc.Driver"
+                connectionURL="jdbc:mysql://127.0.0.1:3306/mydb?useUnicode=yes"
+                userId="mydb"
+                password="mydb">
         </jdbcConnection>
         <!-- 指定生成的类型为java类型，避免数据库中number等类型字段 -->
         <javaTypeResolver>
@@ -48,7 +48,7 @@
         </javaClientGenerator>
 
         <!-- 表名对应生成的实体 -->
-        <table tableName="app_trans" domainObjectName="kfat" />
+        <table tableName="b3_solo_user" domainObjectName="solouser" />
         <!-- enableCountByExample="false" enableUpdateByExample="false"
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">  指定是否生成操作数据库对应的方法 -->

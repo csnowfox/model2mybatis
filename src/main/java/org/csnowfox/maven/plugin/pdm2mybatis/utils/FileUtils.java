@@ -1,4 +1,7 @@
-package org.csnowfox.maven.plugin.pdm2mybatis;
+package org.csnowfox.maven.plugin.pdm2mybatis.utils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -10,7 +13,11 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
-public class CreateFile {
+public class FileUtils {
+
+	public static void writeFile(String msg, String path, String filename) {
+
+	}
 
 	public static void writeFile(List<String> lismsg, String path,
 			String filename) throws IOException {
@@ -22,7 +29,7 @@ public class CreateFile {
 		if ((lismsg == null) || (lismsg.size() <= 0)) {
 			return;
 		}
-		LogUtils.logger.info("===文件[" + filename + "," + path + "] ====");
+		MavenLogger.info("===文件[" + filename + "," + path + "] ====");
 		createPath(path);
 		String name = path + filename;
 		File f = new File(name);
