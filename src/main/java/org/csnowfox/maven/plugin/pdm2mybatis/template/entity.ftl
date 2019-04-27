@@ -1,6 +1,6 @@
 package ${project_package};
 
-public class ${entity_class} implements ${entity_interface} {
+public class ${entity_class} {
 
     <#list class_columns as col>
     /**

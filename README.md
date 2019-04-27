@@ -4,6 +4,8 @@ Maven plugin, using pdm file as source, generating mybatis code
 Due to the need of version management, database modeling uses pdm mode, and it is necessary to generate code directly from pdm.
 Keep pdm consistent with the code by code generation during maven compilation.
 
+* [spring-boot example](https://github.com/csnowfox/pdm2mybatis-example) 
+
 ### pom.xml config example
 ```
 <build>
@@ -42,21 +44,21 @@ Keep pdm consistent with the code by code generation during maven compilation.
                     </goals>
                     <phase>generate-sources</phase>
                     <configuration>
-		    	<!-- Where is the generated mybatis file placed? -->
+                        <!-- Where is the generated mybatis file placed? -->
                         <pathdao>src/main/java/org/csnowfox/maven/plugin/example/dao</pathdao>
-			<!-- The package name of the generated java class of mybatis -->
+                        <!-- The package name of the generated java class of mybatis -->
                         <pathpack>org.csnowfox.maven.plugin.example.dao</pathpack>
-			<!-- Project name -->
+                        <!-- Project name -->
                         <projectname>pdm2mybatis-example.dao</projectname>
-			<!-- Path to the pdm file -->
+                        <!-- Path to the pdm file -->
                         <pathpdm>src/main/resources/pdm</pathpdm>
-			<!-- The user of the table and then table you want to generate-->
+                        <!-- The user of the table and then table you want to generate-->
                         <tables>fund:FUND_CALENDAR;</tables>
-			<!-- Where is the generated sql file? -->
+                        <!-- Where is the generated sql file? -->
                         <pathsql>../SQL/</pathsql>
-			<!-- The name of sql file -->
+                        <!-- The name of sql file -->
                         <namesql>fund.sql</namesql>
-			<!-- The Interface you want the mapper to implement -->
+                        <!-- The Interface you want the mapper to implement -->
                         <interfaceName>org.csnowfox.maven.plugin.example.SqlMapper</interfaceName>
                     </configuration>
                 </execution>
