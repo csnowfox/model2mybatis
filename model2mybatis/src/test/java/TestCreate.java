@@ -15,12 +15,13 @@ public class TestCreate {
 		String pathdao = "D:/temp/api/";
 		String pathpack = "com.csnowfox.hj.acp.api";
 		String projectname = "hj-acp";
-		String pathpdm = "D:\\workspace\\pdm2mybatis\\src\\test\\java\\fund.pdm";
-		String tables = "FUND_CALENDAR";
+		String pathpdm = "E:\\github\\model2mybatis\\model2mybatis\\src\\test\\java\\fund.sql";
+		String tables = "fund:FUND_CALENDAR";
 		String pathsql = "D:/temp";
 		String namesql = "MYTest.sql";
 		String interfaceName = "com.csnowfox.hj.acp.api.service.SqlMapper";
-		
+
+
 		File pathFile = new File(pathpdm);
 		if(pathFile.isFile()){
 			Model2MybatisJavaCode.createFiles(pathdao, pathsql, namesql, projectname, pathpack, pathpdm, tables, interfaceName);
@@ -46,7 +47,7 @@ public class TestCreate {
 					}
 				}
 			}catch(Exception ex){
-				System.out.println(ex);
+				ex.printStackTrace();
 			}
 		}
 		

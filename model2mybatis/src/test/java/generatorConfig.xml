@@ -48,7 +48,7 @@
         </javaClientGenerator>
 
         <!-- 表名对应生成的实体 -->
-        <table tableName="b3_solo_user" domainObjectName="solouser" />
+        <table tableName="xx" domainObjectName="solouser" />
         <!-- enableCountByExample="false" enableUpdateByExample="false"
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">  指定是否生成操作数据库对应的方法 -->

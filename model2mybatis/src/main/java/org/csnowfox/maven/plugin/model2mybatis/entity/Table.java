@@ -330,7 +330,9 @@ public class Table {
 			} else {
 				typeRight = "Integer";
 			}
-		}} else if (type.equals("DATE")) {
+		}} else if (type.equals("INT")) {
+			typeRight = "Integer";
+		} else if (type.equals("DATE")) {
 			typeRight = "Date";
 		} else if (type.equals("TIMESTAMP")) {
 			typeRight = "Date";

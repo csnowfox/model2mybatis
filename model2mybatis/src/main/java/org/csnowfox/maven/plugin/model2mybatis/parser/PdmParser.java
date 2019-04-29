@@ -1,4 +1,4 @@
-package org.csnowfox.maven.plugin.model2mybatis.pdm;
+package org.csnowfox.maven.plugin.model2mybatis.parser;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,7 +24,31 @@ import org.csnowfox.maven.plugin.model2mybatis.entity.User;
  * @Author Csnowfox
  * @Date 2019/4/27 16:45
  **/
-public class PdmParser {
+public class PdmParser implements TableParser {
+
+	@Override
+	public List<Table> getTables(String path, String[] tablenames) {
+
+		// 定义pdm解析器
+		PdmParser pp = new PdmParser();
+
+		List<Table> tabs = new ArrayList<Table>();
+		if ((tablenames == null) || (tablenames.length <= 0)) {
+			Table[] tab = pp.parsePDM_VO(null, path);
+			for (Table t : tab) {
+				tabs.add(t);
+			}
+		} else {
+			for (int a = 0; a < tablenames.length; a++) {
+				Table[] tab = pp.parsePDM_VO(tablenames[a], path);
+				for (Table t : tab) {
+					tabs.add(t);
+				}
+			}
+		}
+
+		return tabs;
+	}
 
 	public Table[] parsePDM_VO(String tableName, String filePath) {
 		Table[] tabs = new Table[0];

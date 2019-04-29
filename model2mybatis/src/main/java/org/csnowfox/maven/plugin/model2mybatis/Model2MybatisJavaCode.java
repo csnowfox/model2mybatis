@@ -1,12 +1,15 @@
 package org.csnowfox.maven.plugin.model2mybatis;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.csnowfox.maven.plugin.model2mybatis.entity.Ddl;
 import org.csnowfox.maven.plugin.model2mybatis.entity.Table;
-import org.csnowfox.maven.plugin.model2mybatis.pdm.PdmParser;
+import org.csnowfox.maven.plugin.model2mybatis.parser.DDLParser;
+import org.csnowfox.maven.plugin.model2mybatis.parser.PdmParser;
+import org.csnowfox.maven.plugin.model2mybatis.parser.TableParser;
 import org.csnowfox.maven.plugin.model2mybatis.utils.FileUtils;
 import org.csnowfox.maven.plugin.model2mybatis.utils.MavenLogger;
 
@@ -37,7 +40,7 @@ public class Model2MybatisJavaCode {
 		mp1.put("PROJECTNAME", projectname);
 		mp1.put("PACKPATH", pathpack);
 		mp1.put("SAVEPATH", pathdao);
-		mp1.put("PDMPATH", pathpdm);
+		mp1.put("modelPath", pathpdm);
 		mp1.put("TABLES", tables);
 		mp1.put("ISCREATE_PERSISTENCE", "YES");
 		lis.add(mp1);
@@ -45,14 +48,18 @@ public class Model2MybatisJavaCode {
 		for (HashMap<String, String> mp : lis) {
 			String packPath = (String) mp.get("PACKPATH");
 			String savePath = (String) mp.get("SAVEPATH");
-			String pdmPath = (String) mp.get("PDMPATH");
+			String modelPath = (String) mp.get("modelPath");
 			String tablename = (String) mp.get("TABLES");
 			String[] tablenames = tablename == null ? null : tablename.split(";");
 			String sIsPersistence = (String) mp.get("ISCREATE_PERSISTENCE");
 			String projName = (String) mp.get("PROJECTNAME");
 
-			createFile(packPath, savePath, pathsql, namesql, pdmPath, sIsPersistence,
-					projName, tablenames, interfaceName);
+			try {
+				createFile(packPath, savePath, pathsql, namesql, modelPath, sIsPersistence,
+                        projName, tablenames, interfaceName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -62,7 +69,7 @@ public class Model2MybatisJavaCode {
 	 * @param savePath
 	 * @param pathsql
 	 * @param namesql
-	 * @param pdmPath
+	 * @param modelPath
 	 * @param sIsPersistence
 	 * @param projName
 	 * @param tablenames
@@ -70,8 +77,8 @@ public class Model2MybatisJavaCode {
 	 */
 	public static void createFile(String packPath, String savePath, 
 			String pathsql, String namesql,
-			String pdmPath, String sIsPersistence,
-			String projName, String[] tablenames, String interfaceName) {
+			String modelPath, String sIsPersistence,
+			String projName, String[] tablenames, String interfaceName) throws IOException {
 
 		boolean isCreateSql = false;
 		boolean isPersistence = !"NO".equalsIgnoreCase(sIsPersistence);
@@ -87,8 +94,8 @@ public class Model2MybatisJavaCode {
 			System.err.println("保存文件路径savepath：不能为空");
 			return;
 		}
-		if ((pdmPath == null) || (pdmPath.isEmpty())) {
-			System.err.println("指定PDM文件pdmPath：不能为空");
+		if ((modelPath == null) || (modelPath.isEmpty())) {
+			System.err.println("指定PDM文件modelPath：不能为空");
 			return;
 		}
 		
@@ -96,23 +103,16 @@ public class Model2MybatisJavaCode {
 			isCreateSql = true;
 		}
 
-		// 定义pdm解析器
-		PdmParser pp = new PdmParser();
-
-		List<Table> tabs = new ArrayList<Table>();
-		if ((tablenames == null) || (tablenames.length <= 0)) {
-			Table[] tab = pp.parsePDM_VO(null, pdmPath);
-			for (Table t : tab) {
-				tabs.add(t);
-			}
-		} else {
-			for (int a = 0; a < tablenames.length; a++) {
-				Table[] tab = pp.parsePDM_VO(tablenames[a], pdmPath);
-				for (Table t : tab) {
-					tabs.add(t);
-				}
-			}
+		TableParser parser = null;
+		if (modelPath.substring(modelPath.lastIndexOf(".")).toUpperCase().equals(".PDM")) {
+			parser = new PdmParser();
 		}
+		if (modelPath.substring(modelPath.lastIndexOf(".")).toUpperCase().equals(".SQL")) {
+			parser = new DDLParser();
+		}
+
+		// 从定义文件解析出table信息
+		List<Table> tabs = parser.getTables(modelPath, tablenames);
 
 		// 生成java类
 		for (int i = 0; i < tabs.size(); i++) {
