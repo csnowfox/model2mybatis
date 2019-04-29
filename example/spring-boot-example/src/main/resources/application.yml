@@ -1,0 +1,18 @@
+#默认使用配置
+spring:
+  profiles:
+    active: dev
+
+---
+
+#开发配置
+spring:
+  profiles: dev
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/mydb?useUnicode=yes
+    username: mydb
+    password: mydb
+    driver-class-name: com.mysql.jdbc.Driver
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource

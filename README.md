@@ -1,10 +1,10 @@
-# pdm2mybatis
+# model2mybatis
 Maven plugin, using pdm file as source, generating mybatis code
 
 Due to the need of version management, database modeling uses pdm mode, and it is necessary to generate code directly from pdm.
 Keep pdm consistent with the code by code generation during maven compilation.
 
-* [spring-boot example](https://github.com/csnowfox/pdm2mybatis-example) 
+* [spring-boot example](https://github.com/csnowfox/model2mybatis-example) 
 
 ### pom.xml config example
 ```
@@ -32,7 +32,7 @@ Keep pdm consistent with the code by code generation during maven compilation.
         </plugin>
         <plugin>
             <groupId>org.csnowfox.maven.plugin</groupId>
-            <artifactId>pdm2mybatis</artifactId>
+            <artifactId>model2mybatis</artifactId>
             <version>0.0.9</version>
 
             <executions>
@@ -49,7 +49,7 @@ Keep pdm consistent with the code by code generation during maven compilation.
                         <!-- The package name of the generated java class of mybatis -->
                         <pathpack>org.csnowfox.maven.plugin.example.dao</pathpack>
                         <!-- Project name -->
-                        <projectname>pdm2mybatis-example.dao</projectname>
+                        <projectname>model2mybatis-example.dao</projectname>
                         <!-- Path to the pdm file -->
                         <pathpdm>src/main/resources/pdm</pathpdm>
                         <!-- The user of the table and then table you want to generate-->
@@ -80,7 +80,7 @@ Keep pdm consistent with the code by code generation during maven compilation.
                             <pluginExecution>
                                 <pluginExecutionFilter>
                                     <groupId>org.csnowfox.maven.plugin</groupId>
-                                    <artifactId>pdm2mybatis</artifactId>
+                                    <artifactId>model2mybatis</artifactId>
                                     <versionRange>
                                         [0.0.9,)
                                     </versionRange>
