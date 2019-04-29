@@ -1,8 +1,8 @@
 # model2mybatis
 Maven plugin, using pdm file as source, generating mybatis code
 
-Due to the need of version management, database modeling uses pdm mode, and it is necessary to generate code directly from pdm.
-Keep pdm consistent with the code by code generation during maven compilation.
+Due to the need of version management, database modeling uses mode such as pdm and ddl, and it is necessary to generate code directly from pdm.
+Keep model file consistent with the code by code generation during maven compilation.
 
 * [spring-boot example](https://github.com/csnowfox/model2mybatis/tree/master/example/spring-boot-example) 
 * [original java example](https://github.com/csnowfox/model2mybatis/tree/master/example/original-java-example) 
