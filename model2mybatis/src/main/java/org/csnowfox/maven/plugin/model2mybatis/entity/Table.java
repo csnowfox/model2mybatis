@@ -144,7 +144,7 @@ public class Table {
 	}
 
 	public void writeout(Table tab, String packPath, String savePath, String dbUser, String interfaceName) throws Exception {
-		MavenLogger.info("==id[" + this.id + "],name[" + this.tableName
+		MavenLogger.info("name[" + this.tableName
 				+ "],code[" + this.tableCode + "], 描述[" + this.comment
 				+ "]=======");
 		dbUser = dbUser.toLowerCase();
@@ -159,6 +159,7 @@ public class Table {
 		root.put("project_package", packPath + "." + dbUser);
 		root.put("entity_class", getTableClassName());
 		root.put("entity_interface", interfaceName);
+		root.put("entity_comment", tab.comment);
 		root.put("entity_table_name", this.tableCode);
 
 		List<ClassColumns> cols = new LinkedList<>();

@@ -38,6 +38,10 @@ import ${project_package}.${entity_class}Example.Criteria;
 import ${project_package}.${entity_class}Example.Criterion;
 import ${project_package}.${entity_class}Example;
 
+/**
+* Created by mydel2mybatis tool
+* @description ${entity_comment}
+*/
 public class ${entity_class}SqlProvider {
 
     /**

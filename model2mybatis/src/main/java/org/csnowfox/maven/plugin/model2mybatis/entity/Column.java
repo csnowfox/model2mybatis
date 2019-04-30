@@ -2,7 +2,7 @@ package org.csnowfox.maven.plugin.model2mybatis.entity;
 
 /**
  * @ClassName: Column
- * @Description pdm解析结果栏位
+ * @Description Pdm parsing result field
  * @Author Csnowfox
  * @Date 2019/4/27 16:45
  **/

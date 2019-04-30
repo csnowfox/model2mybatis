@@ -16,7 +16,7 @@ public class TestCreate {
 		String pathpack = "com.csnowfox.hj.acp.api";
 		String projectname = "hj-acp";
 		String pathpdm = "E:\\github\\model2mybatis\\model2mybatis\\src\\test\\java\\fund.sql";
-		String tables = "fund:FUND_CALENDAR";
+		String tables = "FUND_CALENDAR;FUND_DETAIL";
 		String pathsql = "D:/temp";
 		String namesql = "MYTest.sql";
 		String interfaceName = "com.csnowfox.hj.acp.api.service.SqlMapper";
@@ -24,8 +24,10 @@ public class TestCreate {
 
 		File pathFile = new File(pathpdm);
 		if(pathFile.isFile()){
+			// if pathpdm is file
 			Model2MybatisJavaCode.createFiles(pathdao, pathsql, namesql, projectname, pathpack, pathpdm, tables, interfaceName);
 		}else{
+			//  if pathpdm is dir
 			try{
 				Map<String,String> userMap = new HashMap<String, String>();
 				StringTokenizer fileTokenizer = new StringTokenizer(tables, "|");

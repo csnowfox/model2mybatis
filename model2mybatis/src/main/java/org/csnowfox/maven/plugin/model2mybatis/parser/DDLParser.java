@@ -17,12 +17,13 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * @ClassName: DDLParser
- * @Description ddl文件解析器
+ * @Description Ddl file parser
  * @Author Csnowfox
  * @Date 2019/4/28 23:52
  **/
@@ -64,9 +65,32 @@ public class DDLParser implements TableParser {
                         col.setComment(((SQLColumnDefinition) e).getComment() == null ? "" : ((SQLColumnDefinition) e).getComment().toString());
                         col.setId(((SQLColumnDefinition) e).getNameAsString());
                         colList.add(col);
+
+                        // The primary key is defined in the field
+                        if (((SQLColumnDefinition) e).isPrimaryKey()) {
+                            Key primryKey = null;
+                            if (keyList.size() != 0) {
+                                for (Key k : addTable.getKeys()) {
+                                    if (k.getPkFlag().equals(true)) {
+                                        primryKey = k;
+                                        break;
+                                    }
+                                }
+                                if (primryKey != null) {
+                                    String[] newColumns = Arrays.copyOf(primryKey.getColumnId(), primryKey.getColumnId().length + 1);
+                                    System.arraycopy(new String[]{((SQLColumnDefinition) e).getNameAsString()}, 0, newColumns, primryKey.getColumnId().length, 1);
+                                    primryKey.setColumnId(newColumns);
+                                }
+                            } else {
+                                Key key = new Key();
+                                key.setPkFlag(true);
+                                key.setColumnId(new String[] {((SQLColumnDefinition) e).getNameAsString()});
+                                keyList.add(key);
+                            }
+                        }
                     }
+                    // The primary key definition is a separate statement
                     if (e instanceof MySqlPrimaryKey) {
-                        System.out.print("Key:");
                         List<SQLSelectOrderByItem> keys = ((MySqlPrimaryKey) e).getColumns();
                         Key key = new Key();
                         String[] keyColumns = new String[keys.size()];
@@ -88,9 +112,7 @@ public class DDLParser implements TableParser {
                     tabs.add(addTable);
                 } else {
                     for (int i = 0; i < tablenames.length; i++) {
-                        System.out.println("name:" +addTable.getTableName());
-                        System.out.println(tablenames[i]);
-                        if (tablenames[i].toUpperCase().equals((addTable.getUser().getCode() + ":" +addTable.getTableName()).toUpperCase())) {
+                        if (tablenames[i].toUpperCase().equals(addTable.getTableName().toUpperCase())) {
                             tabs.add(addTable);
                         }
                     }

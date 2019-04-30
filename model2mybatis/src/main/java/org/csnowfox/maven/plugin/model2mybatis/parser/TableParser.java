@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @InterfaceName: TableParser
- * @Description 解析器接口
+ * @Description Parser interface
  * @Author Csnowfox
  * @Date 2019/4/28 23:53
  **/

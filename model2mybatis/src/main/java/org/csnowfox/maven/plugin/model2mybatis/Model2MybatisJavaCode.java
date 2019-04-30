@@ -33,7 +33,7 @@ public class Model2MybatisJavaCode {
 								   String pathsql, String namesql,
 								   String projectname, String pathpack, String pathpdm, String tables, String interfaceName) {
 
-		MavenLogger.info("--- 开始生成mybatis文件 ---");
+		MavenLogger.info("--- Start generating mybatis files ---");
 		List<HashMap<String, String>> lis = new ArrayList<HashMap<String, String>>();
 		HashMap<String, String> mp1 = new HashMap<String, String>();
 

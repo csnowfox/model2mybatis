@@ -2,19 +2,19 @@ package org.csnowfox.maven.plugin.model2mybatis.entity;
 
 /**
  * @ClassName: ClassColumns
- * @Description 栏位
+ * @Description Field Entity
  * @Author Csnowfox
  * @Date 2019/4/27 16:45
  **/
 public class ClassColumns {
 
-    // pojo 驼峰名称
+    // pojo Hump name
     private String name;
     // pojo 类型
     private String clazz;
     // jdbc 类型
     private String jdbcClazz;
-    // pojo 大写驼峰
+    // pojo Capital letter hump
     private String upcaseCamelName;
     // 注释
     private String comment;
