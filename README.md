@@ -35,9 +35,7 @@ Keep model file consistent with the code by code generation during maven compila
             <groupId>org.csnowfox.maven.plugin</groupId>
             <artifactId>model2mybatis</artifactId>
             <version>0.0.9</version>
-
             <executions>
-
                 <execution>
                     <id>fund</id>
                     <goals>
@@ -63,11 +61,9 @@ Keep model file consistent with the code by code generation during maven compila
                         <interfaceName>org.csnowfox.maven.plugin.example.SqlMapper</interfaceName>
                     </configuration>
                 </execution>
-
             </executions>
         </plugin>
     </plugins>
-
     <pluginManagement>
         <plugins>
             <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
