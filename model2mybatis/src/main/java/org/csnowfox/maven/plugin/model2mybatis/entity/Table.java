@@ -22,6 +22,8 @@ public class Table {
 
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(Table.class);
 
+	private final String fltPath = "/org/csnowfox/maven/plugin/model2mybatis/template";
+
 	String id;
 	String tableName;
 	String tableCode;
@@ -30,8 +32,26 @@ public class Table {
 	Column[] cols;
 	Key[] keys;
 	String projectName;
+	boolean hasDate;
+	boolean hasBigDecimal;
 
 	public Table() {
+	}
+
+	public boolean isHasDate() {
+		return hasDate;
+	}
+
+	public void setHasDate(boolean hasDate) {
+		this.hasDate = hasDate;
+	}
+
+	public boolean isHasBigDecimal() {
+		return hasBigDecimal;
+	}
+
+	public void setHasBigDecimal(boolean hasBigDecimal) {
+		this.hasBigDecimal = hasBigDecimal;
 	}
 
 	public String getProjectName() {
@@ -144,15 +164,13 @@ public class Table {
 	}
 
 	public void writeout(Table tab, String packPath, String savePath, String dbUser, String interfaceName) throws Exception {
-		MavenLogger.info("name[" + this.tableName
-				+ "],code[" + this.tableCode + "], 描述[" + this.comment
-				+ "]=======");
+		MavenLogger.info("name[" + this.tableName + "],code[" + this.tableCode + "], 描述[" + this.comment + "]=======");
 		dbUser = dbUser.toLowerCase();
-		String tablepath = savePath + File.separator + dbUser + File.separator;
+		String tablePath = savePath + File.separator + dbUser + File.separator;
 		String name = "";
 
 		Configuration cfg = new Configuration();
-		cfg.setClassForTemplateLoading(Model2MybatisJavaCode.class, "/org/csnowfox/maven/plugin/model2mybatis/template");
+		cfg.setClassForTemplateLoading(Model2MybatisJavaCode.class, fltPath);
 
 		Map<String, Object> root = new HashMap<String, Object>();
 
@@ -198,28 +216,28 @@ public class Table {
 
 		{
 			Template entityTemplate = cfg.getTemplate("entity.ftl");
-			File outputFile = new File(tablepath + File.separator + getTableClassName() + ".java");
+			File outputFile = new File(tablePath + File.separator + getTableClassName() + ".java");
 			Files.createParentDirs(outputFile);
 			entityTemplate.process(root, new FileWriter(outputFile));
 		}
 
 		{
 			Template exampleTemplate = cfg.getTemplate("example.ftl");
-			File outputFile = new File(tablepath + File.separator + getTableClassName() + "Example.java");
+			File outputFile = new File(tablePath + File.separator + getTableClassName() + "Example.java");
 			Files.createParentDirs(outputFile);
 			exampleTemplate.process(root, new FileWriter(outputFile));
 		}
 
 		{
 			Template mapperTemplate = cfg.getTemplate("mapper.ftl");
-			File outputFile = new File(tablepath + File.separator + getTableClassName() + "Mapper.java");
+			File outputFile = new File(tablePath + File.separator + getTableClassName() + "Mapper.java");
 			Files.createParentDirs(outputFile);
 			mapperTemplate.process(root, new FileWriter(outputFile));
 		}
 
 		{
 			Template providerTemplate = cfg.getTemplate("provider.ftl");
-			File outputFile = new File(tablepath + File.separator + getTableClassName() + "SqlProvider.java");
+			File outputFile = new File(tablePath + File.separator + getTableClassName() + "SqlProvider.java");
 			Files.createParentDirs(outputFile);
 			providerTemplate.process(root, new FileWriter(outputFile));
 		}

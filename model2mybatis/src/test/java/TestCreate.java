@@ -15,11 +15,11 @@ public class TestCreate {
 		String pathdao = "D:/temp/api/";
 		String pathpack = "cn.shijinshi.unusual.transaction.dao";
 		String projectname = "hj-acp";
-		String pathpdm = "E:\\github\\model2mybatis\\model2mybatis\\src\\test\\java\\fund.sql";
+		String pathpdm = "D:\\workspace\\model2mybatis\\model2mybatis\\src\\test\\java\\fund.sql";
 		String tables = "cust_relate;risk_stocks;sh50_stocks;stock_yes_info";
 		String pathsql = "D:/temp";
 		String namesql = "MYTest.sql";
-		String interfaceName = "com.csnowfox.hj.acp.api.service.SqlMapper";
+		String interfaceName = "";
 
 
 		File pathFile = new File(pathpdm);
