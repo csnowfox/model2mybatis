@@ -18,6 +18,8 @@
 
 package ${project_package};
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.DeleteProvider;
@@ -65,7 +67,7 @@ public interface ${entity_class}Mapper extends ${entity_interface}{
         "delete",
         "from ${entity_table_name}",
         "where 1=1 <#list class_primarkKeys as key>",
-        "and ${key.name} = <#noparse>#{</#noparse>${key.name},jdbcType=${key.jdbcClazz}<#noparse>}</#noparse></#list>"
+        "and ${key.jdbcName} = <#noparse>#{</#noparse>${key.name},jdbcType=${key.jdbcClazz}<#noparse>}</#noparse></#list>"
     })
     int deleteByPrimaryKey(<#list class_primarkKeys as key><#if key_index != 0>,</#if>${key.clazz} ${key.name}</#list>);
 
@@ -77,7 +79,7 @@ public interface ${entity_class}Mapper extends ${entity_interface}{
      */
     @Insert({
         "insert into ${entity_table_name} (",
-        "<#list class_columns as col><#if col_index != 0>,</#if>${col.name}</#list>",
+        "<#list class_columns as col><#if col_index != 0>,</#if>${col.jdbcName}</#list>",
         ")",
         "values (<#list class_columns as col><#if col_index != 0>",
         ",</#if><#noparse>#{</#noparse>${col.name},jdbcType=${col.jdbcClazz}<#noparse>}</#noparse></#list>)"
@@ -101,7 +103,7 @@ public interface ${entity_class}Mapper extends ${entity_interface}{
      */
     @SelectProvider(type=${entity_class}SqlProvider.class, method="selectByExample")
     @Results({<#list class_columns as col><#if col_index != 0>,</#if>
-        @Result(column="${col.name}", property="${col.name}", jdbcType=JdbcType.${col.jdbcClazz}<#list class_primarkKeys as key><#if key.name=col.name>, id=true</#if></#list>)</#list>
+        @Result(column="${col.jdbcName}", property="${col.name}", jdbcType=JdbcType.${col.jdbcClazz}<#list class_primarkKeys as key><#if key.name=col.name>, id=true</#if></#list>)</#list>
     })
     List<${entity_class}> selectByExample(${entity_class}Example example);
 
@@ -114,14 +116,14 @@ public interface ${entity_class}Mapper extends ${entity_interface}{
     @Select({
         "select",
         <#list class_columns as col>
-        "<#if col_index != 0>,</#if> ${col.name}",
+        "<#if col_index != 0>,</#if> ${col.jdbcName}",
         </#list>
         "from ${entity_table_name}",
         "where 1=1 <#list class_primarkKeys as key>",
-        "and ${key.name} = <#noparse>#{</#noparse>${key.name},jdbcType=${key.jdbcClazz}<#noparse>}</#noparse></#list>"
+        "and ${key.jdbcName} = <#noparse>#{</#noparse>${key.name},jdbcType=${key.jdbcClazz}<#noparse>}</#noparse></#list>"
     })
     @Results({<#list class_columns as col><#if col_index != 0>,</#if>
-        @Result(column="${col.name}", property="${col.name}", jdbcType=JdbcType.${col.jdbcClazz}<#list class_primarkKeys as key><#if key.name=col.name>, id=true</#if></#list>)</#list>
+        @Result(column="${col.jdbcName}", property="${col.name}", jdbcType=JdbcType.${col.jdbcClazz}<#list class_primarkKeys as key><#if key.name=col.name>, id=true</#if></#list>)</#list>
     })
     ${entity_class} selectByPrimaryKey(<#list class_primarkKeys as key><#if key_index != 0>,</#if>${key.clazz} ${key.name}</#list>);
 
@@ -162,7 +164,7 @@ public interface ${entity_class}Mapper extends ${entity_interface}{
         "update ${entity_class}",
         "set ",
         <#list class_notKeys as item>
-        "<#if item_index != 0>,</#if>${item.name} = <#noparse>#{</#noparse>${item.name},jdbcType=${item.jdbcClazz}<#noparse>}</#noparse>",
+        "<#if item_index != 0>,</#if>${item.jdbcName} = <#noparse>#{</#noparse>${item.name},jdbcType=${item.jdbcClazz}<#noparse>}</#noparse>",
         </#list>
         "where 1=1 <#list class_primarkKeys as key>",
         "and ${key.name} = <#noparse>#{</#noparse>${key.name},jdbcType=${key.jdbcClazz}<#noparse>}</#noparse></#list>"

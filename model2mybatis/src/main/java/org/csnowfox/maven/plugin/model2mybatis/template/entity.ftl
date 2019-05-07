@@ -18,6 +18,9 @@
 
 package ${project_package};
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 /**
  * Created by mydel2mybatis tool
  * @description ${entity_comment}
@@ -47,7 +50,7 @@ public class ${entity_class} {
      * @mbggenerated
      */
     public void set${col.upcaseCamelName}(${col.clazz} ${col.name}) {
-        this.${col.name} = ${col.name} == null ? null : ${col.name}.trim();
+        this.${col.name} = ${col.name} == null ? null : ${col.name};
     }
 
     </#list>

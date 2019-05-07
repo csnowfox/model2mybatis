@@ -177,6 +177,7 @@ public class Table {
 				item.setJdbcClazz(this.cols[i].getType());
 				item.setClazz(typeRight);
 				item.setName(underlineToCamel(this.cols[i].getCode()));
+				item.setJdbcName(this.cols[i].getCode());
 				item.setComment(((this.cols[i].getComment() != null && !this.cols[i]
 						.getComment().trim().equals("")) ? this.cols[i]
 						.getComment() : this.cols[i].getName()));
@@ -316,7 +317,8 @@ public class Table {
 
 	private String getTypeRight(String type, Integer length, String percision) {
 		String typeRight = "";
-		if (type.equals("NUMBER")) {
+		String typeIgnoreCase = type.toUpperCase();
+		if (typeIgnoreCase.equals("NUMBER")) {
 			if(length == null){
 				typeRight = "BigDecimal";
 			}else{
@@ -331,15 +333,19 @@ public class Table {
 			} else {
 				typeRight = "Integer";
 			}
-		}} else if (type.equals("INT")) {
+		}} else if (typeIgnoreCase.equals("INT")) {
 			typeRight = "Integer";
-		} else if (type.equals("DATE")) {
+		} else if (typeIgnoreCase.startsWith("DECIMAL")) {
+			typeRight = "BigDecimal";
+		} else if (typeIgnoreCase.equals("DATE")) {
 			typeRight = "Date";
-		} else if (type.equals("TIMESTAMP")) {
+		} else if (typeIgnoreCase.equals("TIMESTAMP")) {
 			typeRight = "Date";
-		} else if (type.equals("INTEGER")) {
+		} else if (typeIgnoreCase.equals("INTEGER")) {
 			typeRight = "Integer";
-		} else {
+		} else if (typeIgnoreCase.startsWith("VARCHAR")) {
+			typeRight = "String";
+		}else {
 			typeRight = "String";
 		}
 

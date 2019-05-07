@@ -31,8 +31,10 @@ import static org.apache.ibatis.jdbc.SqlBuilder.UPDATE;
 import static org.apache.ibatis.jdbc.SqlBuilder.VALUES;
 import static org.apache.ibatis.jdbc.SqlBuilder.WHERE;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 import ${project_package}.${entity_class};
 import ${project_package}.${entity_class}Example.Criteria;
 import ${project_package}.${entity_class}Example.Criterion;
@@ -83,7 +85,7 @@ public class ${entity_class}SqlProvider {
 
         <#list class_columns as col>
         if (record.get${col.upcaseCamelName}() != null) {
-            VALUES("${col.name}", "<#noparse>#{</#noparse>${col.name},jdbcType=${col.jdbcClazz}<#noparse>}</#noparse>");
+            VALUES("${col.jdbcName}", "<#noparse>#{</#noparse>${col.name},jdbcType=${col.jdbcClazz}<#noparse>}</#noparse>");
         }
         </#list>
 
@@ -99,12 +101,12 @@ public class ${entity_class}SqlProvider {
     public String selectByExample(${entity_class}Example example) {
         BEGIN();
         if (example != null && example.isDistinct()) {
-            SELECT_DISTINCT("<#list class_primarkKeys as key><#if key_index != 0>,</#if>${key.name}</#list>");
+            SELECT_DISTINCT("<#list class_primarkKeys as key><#if key_index != 0>,</#if>${key.jdbcName}</#list>");
         } else {
-            SELECT("<#list class_primarkKeys as key><#if key_index != 0>,</#if>${key.name}</#list>");
+            SELECT("<#list class_primarkKeys as key><#if key_index != 0>,</#if>${key.jdbcName}</#list>");
         }
         <#list class_notKeys as item>
-        SELECT("${item.name}");
+        SELECT("${item.jdbcName}");
         </#list>
 
         FROM("${entity_table_name}");
@@ -132,7 +134,7 @@ public class ${entity_class}SqlProvider {
 
         <#list class_columns as col>
         if (record.get${col.upcaseCamelName}() != null) {
-            SET("${col.name} = <#noparse>#{</#noparse>record.${col.name},jdbcType=${col.jdbcClazz}<#noparse>}</#noparse>");
+            SET("${col.jdbcName} = <#noparse>#{</#noparse>record.${col.name},jdbcType=${col.jdbcClazz}<#noparse>}</#noparse>");
         }
         </#list>
 
@@ -151,7 +153,7 @@ public class ${entity_class}SqlProvider {
         UPDATE("${entity_table_name}");
 
         <#list class_columns as col>
-        SET("${col.name} = <#noparse>#{</#noparse>record.${col.name},jdbcType=${col.jdbcClazz}<#noparse>}</#noparse>");
+        SET("${col.jdbcName} = <#noparse>#{</#noparse>record.${col.name},jdbcType=${col.jdbcClazz}<#noparse>}</#noparse>");
         </#list>
 
         ${entity_class}Example example = (${entity_class}Example) parameter.get("example");
@@ -171,12 +173,12 @@ public class ${entity_class}SqlProvider {
 
         <#list class_notKeys as item>
         if (record.get${item.upcaseCamelName}() != null) {
-            SET("userEmail = <#noparse>#{</#noparse>${item.name},jdbcType=${item.jdbcClazz}<#noparse>}</#noparse>");
+            SET("${item.jdbcName} = <#noparse>#{</#noparse>${item.name},jdbcType=${item.jdbcClazz}<#noparse>}</#noparse>");
         }
         </#list>
 
         WHERE("1=1"<#list class_primarkKeys as key>
-            + " and ${key.name} = <#noparse>#{</#noparse>${key.name},jdbcType=${key.jdbcClazz}<#noparse>}</#noparse>"</#list>
+            + " and ${key.jdbcName} = <#noparse>#{</#noparse>${key.name},jdbcType=${key.jdbcClazz}<#noparse>}</#noparse>"</#list>
             );
 
         return SQL();

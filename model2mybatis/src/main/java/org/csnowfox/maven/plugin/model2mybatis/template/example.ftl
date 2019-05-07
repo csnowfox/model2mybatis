@@ -18,8 +18,10 @@
 
 package ${project_package};
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 /**
 * Created by mydel2mybatis tool

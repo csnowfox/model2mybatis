@@ -62,6 +62,10 @@ public class DDLParser implements TableParser {
                         col.setCode(((SQLColumnDefinition) e).getNameAsString());
                         col.setName(((SQLColumnDefinition) e).getNameAsString());
                         col.setType(((SQLColumnDefinition) e).getDataType().toString());
+                        // handler ()
+                        if (col.getType().indexOf("(") != -1) {
+                            col.setType(col.getType().substring(0, col.getType().indexOf("(")));
+                        }
                         col.setComment(((SQLColumnDefinition) e).getComment() == null ? "" : ((SQLColumnDefinition) e).getComment().toString());
                         col.setId(((SQLColumnDefinition) e).getNameAsString());
                         colList.add(col);

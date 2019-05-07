@@ -16,6 +16,8 @@ public class ClassColumns {
     private String jdbcClazz;
     // pojo Capital letter hump
     private String upcaseCamelName;
+    // jdbc name
+    private String jdbcName;
     // 注释
     private String comment;
 
@@ -57,5 +59,13 @@ public class ClassColumns {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getJdbcName() {
+        return jdbcName;
+    }
+
+    public void setJdbcName(String jdbcName) {
+        this.jdbcName = jdbcName;
     }
 }
